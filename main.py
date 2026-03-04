@@ -35,7 +35,6 @@ def load_config(path: str) -> dict:
 
 def run(config: dict, source_filter: str | None, dry_run: bool) -> None:
     settings = config["scraper_settings"]
-    keywords = config["keywords"]
     sources = config["sources"]
 
     if source_filter:
@@ -45,7 +44,7 @@ def run(config: dict, source_filter: str | None, dry_run: bool) -> None:
             sys.exit(1)
 
     fetcher = ArticleFetcher(settings)
-    parser = ArticleParser(settings, keywords)
+    parser = ArticleParser(settings)
     db = ArticleDatabase(config["database"])
 
     total_saved = 0
@@ -82,7 +81,7 @@ def run(config: dict, source_filter: str | None, dry_run: bool) -> None:
         print(f"\n{'='*50}")
         print(f"  Run complete")
         print(f"  Newly saved : {total_saved}")
-        print(f"  Skipped     : {total_skipped} (no keyword match or duplicate)")
+        print(f"  Skipped     : {total_skipped} (failed download or duplicate)")
         print(f"  DB total    : {stats['total']} articles")
         print(f"\n  By source:")
         for src, count in stats["by_source"].items():
@@ -91,7 +90,7 @@ def run(config: dict, source_filter: str | None, dry_run: bool) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Keyword-based news scraper")
+    parser = argparse.ArgumentParser(description="News scraper")
     parser.add_argument("--config", default="config.json", help="Path to config file")
     parser.add_argument("--source", default=None, help="Run only this source (by name)")
     parser.add_argument("--dry-run", action="store_true", help="Discover URLs only, don't fetch or save")

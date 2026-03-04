@@ -1,6 +1,5 @@
 """
-parser.py – Downloads a single article URL and extracts its full text,
-            then checks whether any of the configured keywords appear in it.
+parser.py – Downloads a single article URL and extracts its full text.
 """
 
 import hashlib
@@ -17,10 +16,9 @@ logger = logging.getLogger(__name__)
 class ArticleParser:
     """Downloads and parses individual article pages."""
 
-    def __init__(self, settings: dict, keywords: list[str]):
+    def __init__(self, settings: dict):
         self.delay = settings.get("request_delay_seconds", 2)
         self.timeout = settings.get("request_timeout_seconds", 15)
-        self.keywords = [kw.lower() for kw in keywords]
         self.user_agent = settings.get(
             "user_agent", "ResearchScraper/1.0 (Academic Research)"
         )
@@ -30,23 +28,9 @@ class ArticleParser:
     # ------------------------------------------------------------------
 
     def parse(self, url: str, source_name: str) -> dict | None:
-        """
-        Download and parse *url*.
-
-        Returns a dict with article data if at least one keyword is found,
-        or None if the article should be skipped.
-        """
+        """Download and parse *url*. Returns None only if the download fails."""
         article = self._download(url)
         if article is None:
-            return None
-
-        text = article.text or ""
-        title = article.title or ""
-
-        # Keyword matching – check title + body (case-insensitive).
-        combined = (title + " " + text).lower()
-        matched = [kw for kw in self.keywords if kw in combined]
-        if not matched:
             return None
 
         pub_date = self._format_date(article.publish_date)
@@ -55,12 +39,11 @@ class ArticleParser:
             "id": self._make_id(url),
             "url": url,
             "source": source_name,
-            "title": title,
+            "title": article.title or "",
             "authors": article.authors,
             "published_date": pub_date,
             "scraped_at": datetime.now(timezone.utc).isoformat(),
-            "keywords_matched": matched,
-            "full_text": text,
+            "full_text": article.text or "",
             "summary": article.summary,
             "top_image": article.top_image,
             "meta_description": article.meta_description,
