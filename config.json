@@ -1,35 +1,63 @@
 {
   "keywords": [
-    "climate change",
-    "artificial intelligence",
-    "economic policy"
+    "Saisonarbeiter",
+    "Erntehelfer",
+    "Drittstaatenabkommen",
+    "nicht-eu"
   ],
   "sources": [
     {
-      "name": "BBC News",
-      "base_url": "https://www.bbc.com/news",
-      "rss_url": "http://feeds.bbci.co.uk/news/rss.xml",
-      "type": "rss"
-    },
-    {
-      "name": "Reuters",
-      "base_url": "https://www.reuters.com",
-      "rss_url": "https://feeds.reuters.com/reuters/topNews",
-      "type": "rss"
-    },
-    {
-      "name": "The Guardian",
-      "base_url": "https://www.theguardian.com",
-      "rss_url": "https://www.theguardian.com/world/rss",
-      "type": "rss"
-    },
-    {
-      "name": "Example Custom Site",
-      "base_url": "https://example-news-site.com",
+      "name": "tagesschau – Landwirtschaft",
+      "base_url": "https://www.tagesschau.de",
       "rss_url": null,
       "type": "scrape",
-      "article_list_url": "https://example-news-site.com/latest",
-      "article_link_selector": "a.article-link",
+      "article_list_url": "https://www.tagesschau.de/thema/landwirtschaft",
+      "article_link_selector": "a.teaser__link",
+      "article_link_attribute": "href"
+    },
+    {
+      "name": "DIE ZEIT – Landwirtschaft",
+      "base_url": "https://www.zeit.de",
+      "rss_url": "https://newsfeed.zeit.de/wirtschaft/index",
+      "type": "rss"
+    },
+    {
+      "name": "DER SPIEGEL – Landwirtschaft",
+      "base_url": "https://www.spiegel.de",
+      "rss_url": "https://www.spiegel.de/wirtschaft/index.rss",
+      "type": "rss"
+    },
+    {
+      "name": "topagrar – Saisonarbeit",
+      "base_url": "https://www.topagrar.com",
+      "rss_url": null,
+      "type": "scrape",
+      "article_list_url": "https://www.topagrar.com/themen/saisonarbeit-10109461.html",
+      "article_link_selector": "a.article__link",
+      "article_link_attribute": "href"
+    },
+    {
+      "name": "agrarheute – Harvest Workers",
+      "base_url": "https://www.agrarheute.com",
+      "rss_url": "https://www.agrarheute.com/rss.xml",
+      "type": "rss"
+    },
+    {
+      "name": "BW Wochenblatt",
+      "base_url": "https://www.bw-wochenblatt.de",
+      "rss_url": null,
+      "type": "scrape",
+      "article_list_url": "https://www.bw-wochenblatt.de/",
+      "article_link_selector": "h2 a, h3 a, .article-title a",
+      "article_link_attribute": "href"
+    },
+    {
+      "name": "DEGA GARTENBAU – Saisonarbeitskräfte",
+      "base_url": "https://www.dega-gartenbau.de",
+      "rss_url": null,
+      "type": "scrape",
+      "article_list_url": "https://www.dega-gartenbau.de/",
+      "article_link_selector": "h2 a, h3 a, .entry-title a",
       "article_link_attribute": "href"
     }
   ],
