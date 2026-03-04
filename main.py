@@ -12,7 +12,12 @@ import argparse
 import json
 import logging
 import sys
+import nltk
 from tqdm import tqdm
+
+# Ensure required NLTK data is present (used by newspaper3k's .nlp())
+for _resource in ("punkt", "punkt_tab"):
+    nltk.download(_resource, quiet=True)
 
 from scraper.fetcher import ArticleFetcher
 from scraper.parser import ArticleParser
