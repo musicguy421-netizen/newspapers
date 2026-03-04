@@ -47,7 +47,6 @@ class ArticleDatabase:
             "title": article["title"],
             "published_date": article["published_date"],
             "scraped_at": article["scraped_at"],
-            "keywords_matched": article["keywords_matched"],
             "file": filepath,
         }
         self._save_index()
