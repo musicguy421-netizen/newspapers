@@ -64,31 +64,50 @@ class ArticleFetcher:
         return urls
 
     def _urls_from_html(self, source: dict) -> list[str]:
-        list_url = source.get("article_list_url", source["base_url"])
         selector = source.get("article_link_selector", "a")
         attr = source.get("article_link_attribute", "href")
         base = source["base_url"]
+        next_selector = source.get("next_page_selector", "a[rel='next']")
+        max_pages = source.get("max_pages", 10)
 
-        logger.info("Scraping article list page: %s", list_url)
-        html = self._get(list_url)
-        if html is None:
-            return []
-
-        soup = BeautifulSoup(html, "lxml")
-        raw_links = [tag.get(attr) for tag in soup.select(selector) if tag.get(attr)]
-
-        # Resolve relative URLs and deduplicate while preserving order.
+        current_url = source.get("article_list_url", base)
         seen: set[str] = set()
         urls: list[str] = []
-        for link in raw_links:
-            full = link if urlparse(link).scheme else urljoin(base, link)
-            if full not in seen:
-                seen.add(full)
-                urls.append(full)
-            if len(urls) >= self.max_articles:
+        page = 1
+
+        while current_url and page <= max_pages and len(urls) < self.max_articles:
+            logger.info("Scraping page %d: %s", page, current_url)
+            html = self._get(current_url)
+            if html is None:
                 break
 
-        logger.info("Found %d URLs from HTML scrape: %s", len(urls), source["name"])
+            soup = BeautifulSoup(html, "lxml")
+
+            # Collect article links from this page
+            for tag in soup.select(selector):
+                link = tag.get(attr)
+                if not link:
+                    continue
+                full = link if urlparse(link).scheme else urljoin(base, link)
+                if full not in seen:
+                    seen.add(full)
+                    urls.append(full)
+                if len(urls) >= self.max_articles:
+                    break
+
+            # Find next page link
+            next_tag = soup.select_one(next_selector)
+            if next_tag and next_tag.get("href"):
+                next_href = next_tag["href"]
+                next_url = next_href if urlparse(next_href).scheme else urljoin(current_url, next_href)
+                if next_url == current_url:
+                    break  # avoid infinite loop
+                current_url = next_url
+                page += 1
+            else:
+                break
+
+        logger.info("Found %d URLs from HTML scrape (%d page(s)): %s", len(urls), page, source["name"])
         return urls
 
     def _get(self, url: str) -> str | None:

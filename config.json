@@ -7,7 +7,9 @@
       "type": "scrape",
       "article_list_url": "https://www.tagesschau.de/thema/landwirtschaft",
       "article_link_selector": "a.teaser__link",
-      "article_link_attribute": "href"
+      "article_link_attribute": "href",
+      "next_page_selector": "a.paginierung__naechste-seite, a[rel='next']",
+      "max_pages": 10
     },
     {
       "name": "DIE ZEIT – Landwirtschaft",
@@ -28,7 +30,9 @@
       "type": "scrape",
       "article_list_url": "https://www.topagrar.com/themen/saisonarbeit-10109461.html",
       "article_link_selector": "a.article__link",
-      "article_link_attribute": "href"
+      "article_link_attribute": "href",
+      "next_page_selector": "a.pagination__next, a[rel='next']",
+      "max_pages": 10
     },
     {
       "name": "agrarheute – Harvest Workers",
@@ -43,7 +47,9 @@
       "type": "scrape",
       "article_list_url": "https://www.bw-wochenblatt.de/",
       "article_link_selector": "h2 a, h3 a, .article-title a",
-      "article_link_attribute": "href"
+      "article_link_attribute": "href",
+      "next_page_selector": "a.next, a[rel='next']",
+      "max_pages": 10
     },
     {
       "name": "DEGA GARTENBAU – Saisonarbeitskräfte",
@@ -52,7 +58,9 @@
       "type": "scrape",
       "article_list_url": "https://www.dega-gartenbau.de/",
       "article_link_selector": "h2 a, h3 a, .entry-title a",
-      "article_link_attribute": "href"
+      "article_link_attribute": "href",
+      "next_page_selector": "a.next, a[rel='next']",
+      "max_pages": 10
     }
   ],
   "scraper_settings": {
