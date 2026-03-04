@@ -1,0 +1,46 @@
+{
+  "keywords": [
+    "climate change",
+    "artificial intelligence",
+    "economic policy"
+  ],
+  "sources": [
+    {
+      "name": "BBC News",
+      "base_url": "https://www.bbc.com/news",
+      "rss_url": "http://feeds.bbci.co.uk/news/rss.xml",
+      "type": "rss"
+    },
+    {
+      "name": "Reuters",
+      "base_url": "https://www.reuters.com",
+      "rss_url": "https://feeds.reuters.com/reuters/topNews",
+      "type": "rss"
+    },
+    {
+      "name": "The Guardian",
+      "base_url": "https://www.theguardian.com",
+      "rss_url": "https://www.theguardian.com/world/rss",
+      "type": "rss"
+    },
+    {
+      "name": "Example Custom Site",
+      "base_url": "https://example-news-site.com",
+      "rss_url": null,
+      "type": "scrape",
+      "article_list_url": "https://example-news-site.com/latest",
+      "article_link_selector": "a.article-link",
+      "article_link_attribute": "href"
+    }
+  ],
+  "scraper_settings": {
+    "request_delay_seconds": 2,
+    "request_timeout_seconds": 15,
+    "max_articles_per_source": 50,
+    "user_agent": "ResearchScraper/1.0 (Academic Research Project)"
+  },
+  "database": {
+    "output_dir": "articles_db",
+    "index_file": "articles_db/index.json"
+  }
+}
